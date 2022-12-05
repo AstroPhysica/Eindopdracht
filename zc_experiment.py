@@ -21,12 +21,13 @@ class zonnecel_experiment:
         I_total = []
         R_total = []
         P_total = []
-        adc_value = int(U_0*1024/3.3)
+      #  adc_value = int(U_0*1024/3.3)
 
 
-        self.device.set_output(value=adc_value)
+        self.device.set_output(value=U_0)
         for z in range(0, runs):
             U = self.device.get_input_voltage(channel=1)*3
+            print(self.device.get_input_voltage(channel=1), self.device.get_input_voltage(channel=2))
             U_total.append(U)
             I = self.device.get_input_voltage(channel=2)/4.7
             I_total.append(I)
@@ -38,8 +39,8 @@ class zonnecel_experiment:
         return I_total, U_total, P_total
 
     def scan(self, start, stop, runs):
-        start_value = int(start*1024/3.3)
-        stop_value = int(stop*1024/3.3)
+        start_value = float(start*1024/3.3)
+        stop_value = float(stop*1024/3.3)
 
         for x in np.linspace(start_value, stop_value, 1024):
             I_total, U_total, P_total = self.measure(start_value, runs)
@@ -55,11 +56,11 @@ class zonnecel_experiment:
 zc = zonnecel_experiment(port = 'ASRL4::INSTR')
 
 I, U, P = zc.measure(0, 2)
-print(I, U)
+#print(I, U)
 
-voltage, current, I_error, power = zc.scan(0, 3.3, 5)
-print(voltage)
-plt.plot(voltage, current, 'o')
+voltage, current, I_error, power = zc.scan(0, 3.3, 1)
+#print(voltage)
+plt.errorbar(voltage, current, yerr=I_error, fmt='o', ecolor='purple')
 plt.xlabel('voltage')
 plt.ylabel('current')
 plt.show()
