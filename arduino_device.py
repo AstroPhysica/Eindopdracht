@@ -14,9 +14,9 @@ class ArduinoVISADevice:
         """        
         rm = pyvisa.ResourceManager("@py")
         self.device=rm.open_resource(port, read_termination="\r\n", write_termination="\n")
-        self.value = np.array([0])
-        self.digital = np.array([0])
-        self.input_value = np.array([0])
+        self.value = 0
+        self.digital = 0
+        self.input_value = 0
 
 
     def get_identification(self):
@@ -36,7 +36,7 @@ class ArduinoVISADevice:
         Returns:
             array: returns value in array
         """        
-        self.digital = np.array([value])
+        self.digital = value
         return self.digital
 
 
@@ -46,7 +46,7 @@ class ArduinoVISADevice:
         Returns:
             _array: array of the set output value
         """        
-        self.value = [self.device.query(f"OUT:CH0 {self.digital[0]}")]
+        self.value = self.device.query(f"OUT:CH0 {self.digital}")
         return self.value
 
 
@@ -72,7 +72,7 @@ class ArduinoVISADevice:
         Returns:
             integer: channel voltage
         """        
-        self.value = [self.device.query(f"OUT:CH0 {self.digital[0]}")]
+        self.value = self.device.query(f"OUT:CH0 {self.digital}")
         self.input_voltage = (int(self.device.query(f"MEAS:CH{channel}?")))*3.3/1023
         return self.input_voltage
 
