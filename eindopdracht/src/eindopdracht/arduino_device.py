@@ -1,4 +1,4 @@
-import pyvisa
+from nsp2visasim import sim_pyvisa as pyvisa
 import numpy as np
 
 

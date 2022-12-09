@@ -27,7 +27,7 @@ class zonnecel_experiment:
         self.device.set_output(value=U_0)
         for z in range(0, runs):
             U = self.device.get_input_voltage(channel=1)*3
-            print(self.device.get_input_voltage(channel=1), self.device.get_input_voltage(channel=2))
+            print(self.device.get_input_voltage(channel=1), self.device.get_input_voltage(channel=2), self.device.get_output_value())
             U_total.append(U)
             I = self.device.get_input_voltage(channel=2)/4.7
             I_total.append(I)
@@ -53,7 +53,8 @@ class zonnecel_experiment:
 
         return self.U_gem, self.I_gem, self.I_error, self.P_gem
 
-zc = zonnecel_experiment(port = 'ASRL4::INSTR')
+print(list_devices())
+zc = zonnecel_experiment(port = 'ASRL::SIMPV_BRIGHT::INSTR')
 
 I, U, P = zc.measure(0, 2)
 #print(I, U)

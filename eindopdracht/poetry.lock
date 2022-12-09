@@ -1,0 +1,48 @@
+[[package]]
+name = "nsp2visasim"
+version = "1.3.1"
+description = ""
+category = "main"
+optional = false
+python-versions = ">=3.8,<4.0"
+
+[package.dependencies]
+PyVISA = ">=1.11.3,<2.0.0"
+
+[[package]]
+name = "pyvisa"
+version = "1.12.0"
+description = "Python VISA bindings for GPIB, RS232, TCPIP and USB instruments"
+category = "main"
+optional = false
+python-versions = ">=3.7"
+
+[package.dependencies]
+typing-extensions = "*"
+
+[[package]]
+name = "typing-extensions"
+version = "4.4.0"
+description = "Backported and Experimental Type Hints for Python 3.7+"
+category = "main"
+optional = false
+python-versions = ">=3.7"
+
+[metadata]
+lock-version = "1.1"
+python-versions = "^3.9"
+content-hash = "ae6967fb198c61411b19c8278759198dffdf9732526e9808ae4dd877952968e8"
+
+[metadata.files]
+nsp2visasim = [
+    {file = "nsp2visasim-1.3.1-py3-none-any.whl", hash = "sha256:0d3a2356332573d51670b5250594dccfdbf5a80385ad9dc87067d55706373fde"},
+    {file = "nsp2visasim-1.3.1.tar.gz", hash = "sha256:94a8ae969b0a1d86ce5f4259a5d6aa127e8407bbedd9aa40128f7404a7f7f43c"},
+]
+pyvisa = [
+    {file = "PyVISA-1.12.0-py3-none-any.whl", hash = "sha256:4cbe2f37f75dd233638154f377af7522b8c1dc8324cce3dc3e9563a9b7b84add"},
+    {file = "PyVISA-1.12.0.tar.gz", hash = "sha256:73a38e6bf7431449bd3e1c7bf51a995f62fcae68df580c01c30628629c6b5cbf"},
+]
+typing-extensions = [
+    {file = "typing_extensions-4.4.0-py3-none-any.whl", hash = "sha256:16fa4864408f655d35ec496218b85f79b3437c829e93320c7c9215ccfd92489e"},
+    {file = "typing_extensions-4.4.0.tar.gz", hash = "sha256:1511434bb92bf8dd198c12b1cc812e800d4181cfcb867674e0f8279cc93087aa"},
+]
