@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>800</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QWidget" name="gridLayoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>60</x>
+      <y>200</y>
+      <width>731</width>
+      <height>341</height>
+     </rect>
+    </property>
+    <layout class="QGridLayout" name="gridLayout">
+     <item row="1" column="0">
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <item>
+        <widget class="QLabel" name="label_4">
+         <property name="text">
+          <string>Start value</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QDoubleSpinBox" name="start_button">
+         <property name="suffix">
+          <string> Volt</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_5">
+         <property name="text">
+          <string>Stop value</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QDoubleSpinBox" name="stop_button">
+         <property name="suffix">
+          <string> Volt</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_6">
+         <property name="text">
+          <string>Number of runs</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QDoubleSpinBox" name="runs_button"/>
+       </item>
+      </layout>
+     </item>
+     <item row="0" column="2">
+      <widget class="QLabel" name="label_pu">
+       <property name="text">
+        <string>PU diagram</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="2">
+      <widget class="PlotWidget" name="PU_graph"/>
+     </item>
+     <item row="0" column="1">
+      <widget class="QLabel" name="label_iu">
+       <property name="text">
+        <string>UI diagram</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="PlotWidget" name="IU_graph"/>
+     </item>
+     <item row="2" column="1">
+      <widget class="QPushButton" name="ff_button">
+       <property name="text">
+        <string>Print FF</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="2">
+      <layout class="QVBoxLayout" name="verticalLayout">
+       <item>
+        <widget class="QLabel" name="label_ff">
+         <property name="text">
+          <string>FF value</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="text_line"/>
+       </item>
+      </layout>
+     </item>
+     <item row="2" column="0">
+      <layout class="QVBoxLayout" name="verticalLayout_3">
+       <item>
+        <widget class="QPushButton" name="plot_button">
+         <property name="text">
+          <string>Plot</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="save_button">
+         <property name="text">
+          <string>Save</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item row="0" column="0">
+      <widget class="QComboBox" name="list_devices"/>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>800</width>
+     <height>22</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>PlotWidget</class>
+   <extends>QGraphicsView</extends>
+   <header>pyqtgraph</header>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>

@@ -1,4 +1,4 @@
-from arduino_device import ArduinoVISADevice, list_devices
+from eindopdracht.arduino_device import ArduinoVISADevice, list_devices
 import numpy as np
 import matplotlib.pyplot as plt
 import threading
@@ -14,6 +14,7 @@ class zonnecel_experiment:
         self.P_gem = []
         self.I_error = []
         self.U_error = []
+        self.P_error = []
     
     def measure(self, U_0, runs):
         
@@ -25,9 +26,9 @@ class zonnecel_experiment:
 
 
         self.device.set_output(value=U_0)
-        for z in range(0, runs):
+        for z in range(0, int(runs)):
             U = self.device.get_input_voltage(channel=1)*3
-            print(self.device.get_input_voltage(channel=1), self.device.get_input_voltage(channel=2), self.device.get_output_value())
+           # print(self.device.get_input_voltage(channel=1), self.device.get_input_voltage(channel=2), self.device.get_output_value(), U_0)
             U_total.append(U)
             I = self.device.get_input_voltage(channel=2)/4.7
             I_total.append(I)
@@ -39,29 +40,43 @@ class zonnecel_experiment:
         return I_total, U_total, P_total
 
     def scan(self, start, stop, runs):
-        start_value = float(start*1024/3.3)
-        stop_value = float(stop*1024/3.3)
+        start_value = float(start*1023/3.3)
+        stop_value = float(stop*1023/3.3)
 
-        for x in np.linspace(start_value, stop_value, 1024):
-            I_total, U_total, P_total = self.measure(start_value, runs)
+        for x in np.linspace(start_value, stop_value, 1023):
+            I_total, U_total, P_total = self.measure(x, runs)
 
             self.I_gem.append(np.mean(I_total))
             self.I_error.append(float(np.std(I_total))/np.sqrt(runs))
             self.U_gem.append(np.mean(U_total))
             self.U_error.append(float(np.std(U_total)/np.sqrt(runs)))
             self.P_gem.append(np.mean(P_total))
+            self.P_error.append(float(np.std(P_total)/np.sqrt(runs)))
+            self.ff = max(self.P_gem)/(max(self.U_gem)*max(self.I_gem))
+        return self.U_gem, self.I_gem, self.I_error, self.P_gem, self.P_error, self.ff
+    
+    def scan_start(self, start, stop, runs):
+        """Function to start scanning when using threading
 
-        return self.U_gem, self.I_gem, self.I_error, self.P_gem
+        Args:
+            start (float): starting value in Voltage
+            stop (float): ending value in Voltage
+            runs (integer): number of runs to execute
+        """        
+        self._scan_thread = threading.Thread(
+        target=self.scan, args=(start, stop, runs)
+        )
+        self._scan_thread.start()
 
 print(list_devices())
-zc = zonnecel_experiment(port = 'ASRL::SIMPV_BRIGHT::INSTR')
+# zc = zonnecel_experiment(port = 'ASRL::SIMPV_BRIGHT::INSTR')
 
-I, U, P = zc.measure(0, 2)
-#print(I, U)
+# I, U, P = zc.measure(0, 2)
+# #print(I, U)
 
-voltage, current, I_error, power = zc.scan(0, 3.3, 1)
-#print(voltage)
-plt.errorbar(voltage, current, yerr=I_error, fmt='o', ecolor='purple')
-plt.xlabel('voltage')
-plt.ylabel('current')
-plt.show()
+# voltage, current, I_error, power = zc.scan(0, 3.3, 1)
+# #print(voltage)
+# plt.errorbar(voltage, current, yerr=I_error, fmt='o', ecolor='purple')
+# plt.xlabel('voltage')
+# plt.ylabel('current')
+# plt.show()

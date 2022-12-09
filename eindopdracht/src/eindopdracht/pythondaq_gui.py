@@ -3,7 +3,6 @@ import time
 from PySide6.QtWidgets import QApplication
 import pyqtgraph as pg
 from PySide6.QtCore import Slot
-import matplotlib.pyplot as plt
 from pythondaq.arduino_device import ArduinoVISADevice, list_devices
 from pythondaq.diode_experiment import DiodeExperiment
 import numpy as np

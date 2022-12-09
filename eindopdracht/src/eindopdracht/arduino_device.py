@@ -1,4 +1,7 @@
-from nsp2visasim import sim_pyvisa as pyvisa
+try:
+    from nsp2visasim import sim_pyvisa as pyvisa
+except ModuleNotFoundError:
+    import pyvisa
 import numpy as np
 
 
@@ -88,5 +91,6 @@ class ArduinoVISADevice:
 
 def list_devices():
     rm = pyvisa.ResourceManager("@py")
-    return rm.list_resources()
-
+    port = rm.list_resources()
+    print(port)
+    return port
