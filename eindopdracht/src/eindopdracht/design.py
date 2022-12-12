@@ -26,12 +26,12 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(800, 600)
+        MainWindow.resize(800, 400)
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
         self.gridLayoutWidget = QWidget(self.centralwidget)
         self.gridLayoutWidget.setObjectName(u"gridLayoutWidget")
-        self.gridLayoutWidget.setGeometry(QRect(60, 200, 731, 341))
+        self.gridLayoutWidget.setGeometry(QRect(30, 10, 731, 341))
         self.gridLayout = QGridLayout(self.gridLayoutWidget)
         self.gridLayout.setObjectName(u"gridLayout")
         self.gridLayout.setContentsMargins(0, 0, 0, 0)
@@ -68,32 +68,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_2.addWidget(self.runs_button)
 
 
-        self.gridLayout.addLayout(self.verticalLayout_2, 1, 0, 1, 1)
-
-        self.label_pu = QLabel(self.gridLayoutWidget)
-        self.label_pu.setObjectName(u"label_pu")
-
-        self.gridLayout.addWidget(self.label_pu, 0, 2, 1, 1)
-
-        self.PU_graph = PlotWidget(self.gridLayoutWidget)
-        self.PU_graph.setObjectName(u"PU_graph")
-
-        self.gridLayout.addWidget(self.PU_graph, 1, 2, 1, 1)
-
-        self.label_iu = QLabel(self.gridLayoutWidget)
-        self.label_iu.setObjectName(u"label_iu")
-
-        self.gridLayout.addWidget(self.label_iu, 0, 1, 1, 1)
-
-        self.IU_graph = PlotWidget(self.gridLayoutWidget)
-        self.IU_graph.setObjectName(u"IU_graph")
-
-        self.gridLayout.addWidget(self.IU_graph, 1, 1, 1, 1)
-
-        self.ff_button = QPushButton(self.gridLayoutWidget)
-        self.ff_button.setObjectName(u"ff_button")
-
-        self.gridLayout.addWidget(self.ff_button, 2, 1, 1, 1)
+        self.gridLayout.addLayout(self.verticalLayout_2, 2, 0, 1, 1)
 
         self.verticalLayout = QVBoxLayout()
         self.verticalLayout.setObjectName(u"verticalLayout")
@@ -108,7 +83,7 @@ class Ui_MainWindow(object):
         self.verticalLayout.addWidget(self.text_line)
 
 
-        self.gridLayout.addLayout(self.verticalLayout, 2, 2, 1, 1)
+        self.gridLayout.addLayout(self.verticalLayout, 4, 2, 1, 1)
 
         self.verticalLayout_3 = QVBoxLayout()
         self.verticalLayout_3.setObjectName(u"verticalLayout_3")
@@ -123,12 +98,57 @@ class Ui_MainWindow(object):
         self.verticalLayout_3.addWidget(self.save_button)
 
 
-        self.gridLayout.addLayout(self.verticalLayout_3, 2, 0, 1, 1)
+        self.gridLayout.addLayout(self.verticalLayout_3, 4, 0, 1, 1)
+
+        self.IU_graph = PlotWidget(self.gridLayoutWidget)
+        self.IU_graph.setObjectName(u"IU_graph")
+
+        self.gridLayout.addWidget(self.IU_graph, 2, 1, 1, 1)
+
+        self.PU_graph = PlotWidget(self.gridLayoutWidget)
+        self.PU_graph.setObjectName(u"PU_graph")
+
+        self.gridLayout.addWidget(self.PU_graph, 2, 2, 1, 1)
+
+        self.label_pu = QLabel(self.gridLayoutWidget)
+        self.label_pu.setObjectName(u"label_pu")
+
+        self.gridLayout.addWidget(self.label_pu, 0, 2, 1, 1)
+
+        self.verticalLayout_4 = QVBoxLayout()
+        self.verticalLayout_4.setObjectName(u"verticalLayout_4")
+        self.label = QLabel(self.gridLayoutWidget)
+        self.label.setObjectName(u"label")
+
+        self.verticalLayout_4.addWidget(self.label)
+
+        self.Pstring = QLineEdit(self.gridLayoutWidget)
+        self.Pstring.setObjectName(u"Pstring")
+
+        self.verticalLayout_4.addWidget(self.Pstring)
+
+
+        self.gridLayout.addLayout(self.verticalLayout_4, 4, 1, 1, 1)
+
+        self.label_iu = QLabel(self.gridLayoutWidget)
+        self.label_iu.setObjectName(u"label_iu")
+
+        self.gridLayout.addWidget(self.label_iu, 0, 1, 1, 1)
+
+        self.verticalLayout_5 = QVBoxLayout()
+        self.verticalLayout_5.setObjectName(u"verticalLayout_5")
+        self.label_2 = QLabel(self.gridLayoutWidget)
+        self.label_2.setObjectName(u"label_2")
+
+        self.verticalLayout_5.addWidget(self.label_2)
 
         self.list_devices = QComboBox(self.gridLayoutWidget)
         self.list_devices.setObjectName(u"list_devices")
 
-        self.gridLayout.addWidget(self.list_devices, 0, 0, 1, 1)
+        self.verticalLayout_5.addWidget(self.list_devices)
+
+
+        self.gridLayout.addLayout(self.verticalLayout_5, 0, 0, 1, 1)
 
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QMenuBar(MainWindow)
@@ -151,11 +171,12 @@ class Ui_MainWindow(object):
         self.label_5.setText(QCoreApplication.translate("MainWindow", u"Stop value", None))
         self.stop_button.setSuffix(QCoreApplication.translate("MainWindow", u" Volt", None))
         self.label_6.setText(QCoreApplication.translate("MainWindow", u"Number of runs", None))
-        self.label_pu.setText(QCoreApplication.translate("MainWindow", u"PU diagram", None))
-        self.label_iu.setText(QCoreApplication.translate("MainWindow", u"UI diagram", None))
-        self.ff_button.setText(QCoreApplication.translate("MainWindow", u"Print FF", None))
         self.label_ff.setText(QCoreApplication.translate("MainWindow", u"FF value", None))
         self.plot_button.setText(QCoreApplication.translate("MainWindow", u"Plot", None))
         self.save_button.setText(QCoreApplication.translate("MainWindow", u"Save", None))
+        self.label_pu.setText(QCoreApplication.translate("MainWindow", u"                                          PU Diagram", None))
+        self.label.setText(QCoreApplication.translate("MainWindow", u"P-Max", None))
+        self.label_iu.setText(QCoreApplication.translate("MainWindow", u"                                          IU Diagram", None))
+        self.label_2.setText(QCoreApplication.translate("MainWindow", u"Select Device", None))
     # retranslateUi
 

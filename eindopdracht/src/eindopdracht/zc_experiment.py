@@ -1,6 +1,5 @@
 from eindopdracht.arduino_device import ArduinoVISADevice, list_devices
 import numpy as np
-import matplotlib.pyplot as plt
 import threading
 
 class zonnecel_experiment:
@@ -53,7 +52,8 @@ class zonnecel_experiment:
             self.P_gem.append(np.mean(P_total))
             self.P_error.append(float(np.std(P_total)/np.sqrt(runs)))
             self.ff = max(self.P_gem)/(max(self.U_gem)*max(self.I_gem))
-        return self.U_gem, self.I_gem, self.I_error, self.P_gem, self.P_error, self.ff
+                
+        return self.U_gem, self.I_gem, self.I_error, self.P_gem, self.P_error, self.ff, self.U_error
     
     def scan_start(self, start, stop, runs):
         """Function to start scanning when using threading
@@ -67,16 +67,3 @@ class zonnecel_experiment:
         target=self.scan, args=(start, stop, runs)
         )
         self._scan_thread.start()
-
-print(list_devices())
-# zc = zonnecel_experiment(port = 'ASRL::SIMPV_BRIGHT::INSTR')
-
-# I, U, P = zc.measure(0, 2)
-# #print(I, U)
-
-# voltage, current, I_error, power = zc.scan(0, 3.3, 1)
-# #print(voltage)
-# plt.errorbar(voltage, current, yerr=I_error, fmt='o', ecolor='purple')
-# plt.xlabel('voltage')
-# plt.ylabel('current')
-# plt.show()

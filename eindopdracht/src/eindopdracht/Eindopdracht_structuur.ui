@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>800</width>
-    <height>600</height>
+    <height>400</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,14 +17,14 @@
    <widget class="QWidget" name="gridLayoutWidget">
     <property name="geometry">
      <rect>
-      <x>60</x>
-      <y>200</y>
+      <x>30</x>
+      <y>10</y>
       <width>731</width>
       <height>341</height>
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout">
-     <item row="1" column="0">
+     <item row="2" column="0">
       <layout class="QVBoxLayout" name="verticalLayout_2">
        <item>
         <widget class="QLabel" name="label_4">
@@ -66,34 +66,7 @@
        </item>
       </layout>
      </item>
-     <item row="0" column="2">
-      <widget class="QLabel" name="label_pu">
-       <property name="text">
-        <string>PU diagram</string>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="2">
-      <widget class="PlotWidget" name="PU_graph"/>
-     </item>
-     <item row="0" column="1">
-      <widget class="QLabel" name="label_iu">
-       <property name="text">
-        <string>UI diagram</string>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="1">
-      <widget class="PlotWidget" name="IU_graph"/>
-     </item>
-     <item row="2" column="1">
-      <widget class="QPushButton" name="ff_button">
-       <property name="text">
-        <string>Print FF</string>
-       </property>
-      </widget>
-     </item>
-     <item row="2" column="2">
+     <item row="4" column="2">
       <layout class="QVBoxLayout" name="verticalLayout">
        <item>
         <widget class="QLabel" name="label_ff">
@@ -107,7 +80,7 @@
        </item>
       </layout>
      </item>
-     <item row="2" column="0">
+     <item row="4" column="0">
       <layout class="QVBoxLayout" name="verticalLayout_3">
        <item>
         <widget class="QPushButton" name="plot_button">
@@ -125,8 +98,53 @@
        </item>
       </layout>
      </item>
+     <item row="2" column="1">
+      <widget class="PlotWidget" name="IU_graph"/>
+     </item>
+     <item row="2" column="2">
+      <widget class="PlotWidget" name="PU_graph"/>
+     </item>
+     <item row="0" column="2">
+      <widget class="QLabel" name="label_pu">
+       <property name="text">
+        <string>                                          PU Diagram</string>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="1">
+      <layout class="QVBoxLayout" name="verticalLayout_4">
+       <item>
+        <widget class="QLabel" name="label">
+         <property name="text">
+          <string>P-Max</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="Pstring"/>
+       </item>
+      </layout>
+     </item>
+     <item row="0" column="1">
+      <widget class="QLabel" name="label_iu">
+       <property name="text">
+        <string>                                          IU Diagram</string>
+       </property>
+      </widget>
+     </item>
      <item row="0" column="0">
-      <widget class="QComboBox" name="list_devices"/>
+      <layout class="QVBoxLayout" name="verticalLayout_5">
+       <item>
+        <widget class="QLabel" name="label_2">
+         <property name="text">
+          <string>Select Device</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QComboBox" name="list_devices"/>
+       </item>
+      </layout>
      </item>
     </layout>
    </widget>

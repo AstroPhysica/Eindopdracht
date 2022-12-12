@@ -33,6 +33,14 @@ class UserInterface(QtWidgets.QMainWindow):
         self.ui.stop_button.setMaximum(3.3)
         self.ui.runs_button.setMinimum(1)
 
+        #set default value spinboxes
+        self.ui.stop_button.setValue(3.3)
+        self.ui.start_button.setValue(0)
+        self.ui.runs_button.setValue(1)
+
+        #set step size spinboxes
+        self.ui.stop_button.setSingleStep(0.1)
+        self.ui.start_button.setSingleStep(0.1)
         #button plots the graph
         self.ui.plot_button.clicked.connect(self.start_scan)
         #button saves the data
@@ -42,11 +50,11 @@ class UserInterface(QtWidgets.QMainWindow):
         self.plot_timer.timeout.connect(self.graph)
         self.plot_timer.start(100)
 
+        self.ui.text_line.setReadOnly(True)
+        self.ui.Pstring.setReadOnly(True)
+
         self.ui.list_devices.currentIndexChanged.connect(self.device)
 
-        #print ff value
-        self.ui.text_line.setReadOnly(True)
-        self.ui.ff_button.clicked.connect(self.ff)
 
     @Slot()
     def device(self):
@@ -68,46 +76,46 @@ class UserInterface(QtWidgets.QMainWindow):
             self.zc.scan_start(start, end, runs)
 
     @Slot()
+    def fitfunctie(self, I_l, I_0, a, U):
+        I = I_l - I_0*(np.exp(a*U)-1)
+        return
+
+    @Slot()
     def graph(self):
         self.ui.IU_graph.plot(self.zc.U_gem, self.zc.I_gem, symbol="o", symbolSize=5, pen=None)
-        error_bars = pg.ErrorBarItem(x=np.array(self.zc.U_gem), y=np.array(self.zc.I_gem), height = np.array(self.zc.I_error))
+        error_bars = pg.ErrorBarItem(x=np.array(self.zc.U_gem), y=np.array(self.zc.I_gem), height = 2*np.array(self.zc.I_error), width= 2*np.array(self.zc.U_error))
         self.ui.IU_graph.addItem(error_bars)
         self.ui.IU_graph.setLabel('left', text='Current in Ampére')
         self.ui.IU_graph.setLabel('bottom', text='Voltage in Volt')
         
         self.ui.PU_graph.plot(self.zc.U_gem, self.zc.P_gem, symbol="o", symbolSize=5, pen=None)
-        errors = pg.ErrorBarItem(x=np.array(self.zc.U_gem), y=np.array(self.zc.P_gem), height = 2*np.array(self.zc.P_error))
+        errors = pg.ErrorBarItem(x=np.array(self.zc.U_gem), y=np.array(self.zc.P_gem), height = 2*np.array(self.zc.P_error), width= 2*np.array(self.zc.U_error))
         self.ui.PU_graph.addItem(errors)
+        self.ui.PU_graph.setLabel('left', text='Power in Watt')
+        self.ui.PU_graph.setLabel('bottom', text='Voltage in Volt')     
+        if len(self.zc.P_gem) == 1023:
+            #ff value
+            self.ui.text_line.clear()
+            self.ui.text_line.setText(f'{round(self.zc.ff, 2)}')
+            #power value
+            self.ui.Pstring.clear()
+            self.ui.Pstring.setText(f'{round(max(self.zc.P_gem), 2)} Watt')
 
 
     @Slot()
-    def ff(self):
-        self.ui.text_line.clear()
-        self.ui.text_line.setText(f'{self.zc.ff}')
+    def save_data(self):
 
-    @Slot()
-    def save_data(self, port):
-        if self.ui.list_devices.currentIndex() == 1:
-            port = 'ASRL::SIMPV_BRIGHT::INSTR'
+        current = all(1*10**-9 if i==0 else i for i in self.zc.I_gem)
 
-        start = int(self.ui.start_button.value())
-        end = int(self.ui.end_button.value())
-        runs = int(self.runs_button.value())
-        zc = zonnecel_experiment(port)
-
-        diode = zc.scan(start, end, runs)
-        current = diode[1]
-        voltage = diode[0]
-        error = diode[2]
 
         filename, _ = QtWidgets.QFileDialog.getSaveFileName(filter="CSV files (*.csv)")
-        pairs = {'Voltage': voltage, 'Current': current}
+        pairs = {'Voltage': self.zc.U_gem, 'Voltage-error':self.zc.U_error, 'Current': self.zc.I_gem, 'Current-error': self.zc.I_error, 'Power': self.zc.P_gem, 'Power-error':self.zc.P_error, 'Resistance':np.array(self.zc.U_gem)/current, 'Fill Factor':self.zc.ff}
 
         df = pandas.DataFrame.from_dict(pairs)
 
         df.to_csv(filename)
 
-        file = open("data.csv")
+#        file = open("data.csv")
 
 def main():
     """Runs the class if the file is run
