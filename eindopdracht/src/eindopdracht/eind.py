@@ -16,6 +16,10 @@ pg.setConfigOption("background", "w")
 pg.setConfigOption("foreground", "k")
 
 class UserInterface(QtWidgets.QMainWindow):
+    """Class in which creates the userinterface which makes use of functions, defined in the class,
+    that are run when requested by buttons of the interface.
+
+    """    
 
     def __init__(self):
         super().__init__()
@@ -58,12 +62,16 @@ class UserInterface(QtWidgets.QMainWindow):
 
     @Slot()
     def device(self):
+        """Function in which the port/device is selected
+        """        
         self.port = self.ui.list_devices.currentText()
         print(self.port)
         self.zc = zonnecel_experiment(self.port)
     
     @Slot()
     def start_scan(self):
+        """Function in which the scan starts running when plot_button is clicked
+        """        
         self.ui.IU_graph.clear()
         self.ui.PU_graph.clear()
         self.ui.text_line.clear()
@@ -76,12 +84,11 @@ class UserInterface(QtWidgets.QMainWindow):
             self.zc.scan_start(start, end, runs)
 
     @Slot()
-    def fitfunctie(self, I_l, I_0, a, U):
-        I = I_l - I_0*(np.exp(a*U)-1)
-        return
-
-    @Slot()
     def graph(self):
+        """Function in which the graphs are made and the ff value and P-max value are shown. One is a graph of I_gem and U_gem, the other is a graph of P_gem and U_gem.
+        For each graph are both the horizontal and vertical errors plotted.
+        When the last point of data has been plotted the ff value and p-max value are shown, completing the process
+        """        
         self.ui.IU_graph.plot(self.zc.U_gem, self.zc.I_gem, symbol="o", symbolSize=5, pen=None)
         error_bars = pg.ErrorBarItem(x=np.array(self.zc.U_gem), y=np.array(self.zc.I_gem), height = 2*np.array(self.zc.I_error), width= 2*np.array(self.zc.U_error))
         self.ui.IU_graph.addItem(error_bars)
@@ -104,6 +111,9 @@ class UserInterface(QtWidgets.QMainWindow):
 
     @Slot()
     def save_data(self):
+        """Function in which the acquired data is saved to a self named .csv file.
+        The csv file stores the Voltage, Voltage-error, Current, Current-error, Power, Power-error, Resistance, Fill Factor
+        """        
 
         current = all(1*10**-9 if i==0 else i for i in self.zc.I_gem)
 
@@ -118,7 +128,8 @@ class UserInterface(QtWidgets.QMainWindow):
 #        file = open("data.csv")
 
 def main():
-    """Runs the class if the file is run
+    """Runs the class if the file is run.
+    File can be run on command run_eind.
     """    
     app = QtWidgets.QApplication(sys.argv)
     ui = UserInterface()
